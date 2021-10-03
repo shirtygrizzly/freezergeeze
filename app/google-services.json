@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "310090194189",
+    "firebase_url": "https://freezergeeze-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "freezergeeze",
+    "storage_bucket": "freezergeeze.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310090194189:android:0ae274237bda37830a2444",
+        "android_client_info": {
+          "package_name": "com.example.freezergeez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310090194189-d8ii7gf9dmf2rg7s7nqttosj77kpg3he.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.freezergeez",
+            "certificate_hash": "7b8c7055797b44452d1ca80b5c3ab6d8b070cb40"
+          }
+        },
+        {
+          "client_id": "310090194189-2ha5vhsts0mroabnlogac5hmhjufjuq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbh2QQu0xKfI-oGo6RZJDGCvMT8pVsA2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310090194189-2ha5vhsts0mroabnlogac5hmhjufjuq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

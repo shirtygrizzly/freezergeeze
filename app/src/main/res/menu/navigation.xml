@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Freezer One" />
+    <item android:title="Freezer Two"
+        android:id="@+id/freezerTwo"/>
+    <item
+        android:id="@+id/addItem"
+        android:title="Add Item" />
+    <item
+        android:id="@+id/profile"
+        android:title="Profile" />
+
+</menu>
