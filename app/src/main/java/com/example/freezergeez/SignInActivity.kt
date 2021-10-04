@@ -28,7 +28,7 @@ class SignInActivity : AppCompatActivity() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("your ID")
+            .requestIdToken("310090194189-2ha5vhsts0mroabnlogac5hmhjufjuq9.apps.googleusercontent.com")
             .requestEmail()
             .build()
 
