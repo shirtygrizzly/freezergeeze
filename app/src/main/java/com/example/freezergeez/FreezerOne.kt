@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freezergeez.MainActivity.Companion.userID
@@ -21,7 +24,7 @@ class FreezerOne :Fragment() {
     private lateinit var _binding:FragmentHomeBinding
     private val binding get() = _binding
 
-
+private val sharedView : SharedView by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,7 @@ class FreezerOne :Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
+
 
         // Inflate the layout for this fragment
         return binding.root
@@ -74,6 +78,15 @@ private fun getItemData(){
     })
 }
     private fun itemClicked(item:Item){
+        val itemName = item.itemName
+        val itemDesc = item.itemDesc
+        val itemQty = item.itemQty
+        val itemUrl = item.photoURL
+        sharedView.saveItem(itemName,itemDesc,itemQty,itemUrl)
+
+        (activity as MainActivity).showDialog()
+
+
 
         Toast.makeText(activity, "Clicked: ${item.itemName}",Toast.LENGTH_SHORT).show()
     }

@@ -16,7 +16,7 @@
       "oauth_client": [
         {
           "client_id": "310090194189-d8ii7gf9dmf2rg7s7nqttosj77kpg3he.apps.googleusercontent.com",
-          "client_type": 1,
+          "client_type": 3,
           "android_info": {
             "package_name": "com.example.freezergeez",
             "certificate_hash": "7b8c7055797b44452d1ca80b5c3ab6d8b070cb40"
