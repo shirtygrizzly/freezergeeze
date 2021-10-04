@@ -50,8 +50,8 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -67,11 +67,11 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                 catch( e: ApiException) {
                     Log.w("SignInActivity", "Google sign in failed", e)
                 }
-                } else{
-                    Log.w("SignInActivity",exception.toString())
-                }
+            } else{
+                Log.w("SignInActivity",exception.toString())
             }
         }
+    }
     //Authenticate with Firebase and Google
     private fun firebaseAuthWithGoogle(idToken:String){
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -87,6 +87,6 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                     Log.d("SignInActivity", "signInWithCredential:failure")
                 }
             }
-        }
+    }
 }
 

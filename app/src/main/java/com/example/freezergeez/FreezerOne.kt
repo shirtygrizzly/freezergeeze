@@ -1,30 +1,26 @@
 package com.example.freezergeez
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freezergeez.MainActivity.Companion.userID
 import com.example.freezergeez.databinding.FragmentHomeBinding
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.freezer_item.*
 
 
 class FreezerOne :Fragment() {
     private lateinit var itemRview :RecyclerView
     private lateinit var itemArrayList:ArrayList<Item>
     private lateinit var myRef : DatabaseReference
-    private lateinit var _binding:FragmentHomeBinding
-    private val binding get() = _binding
+    private var _binding:FragmentHomeBinding? =null
+    private val binding get() = _binding!!
 
-private val sharedView : SharedView by activityViewModels()
+    private val sharedView : SharedView by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,50 +42,56 @@ private val sharedView : SharedView by activityViewModels()
 
 
     }
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            itemRview = binding.recyclerId
-            itemRview.layoutManager = LinearLayoutManager(activity)
-            itemRview.setHasFixedSize(true)
-            itemArrayList = arrayListOf()
-            getItemData()
-            }
-
-private fun getItemData(){
-    myRef= FirebaseDatabase.getInstance().getReference("User")
-    val rootRef = myRef.child(userID)
-    rootRef.addValueEventListener(object : ValueEventListener{
-        override fun onDataChange(snapshot: DataSnapshot) {
-            if(snapshot.exists()){
-                for(itemSnapshot in snapshot.children){
-                    val item =itemSnapshot.getValue(Item::class.java)
-                    if(item!!.freezerLoc =="Freezer One")
-                    itemArrayList.add(item)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //Start up Recycler View for Fragment
+        itemRview = binding.recyclerId
+        itemRview.layoutManager = LinearLayoutManager(activity)
+        itemRview.setHasFixedSize(true)
+        itemArrayList = arrayListOf()
+        getItemData()
+    }
+    //Get Item Data for the Freezer
+    private fun getItemData(){
+        myRef= FirebaseDatabase.getInstance().getReference("User")
+        val rootRef = myRef.child(userID)
+        rootRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(itemSnapshot in snapshot.children){
+                        val item =itemSnapshot.getValue(Item::class.java)
+                        if(item!!.freezerLoc =="Freezer One")
+                            itemArrayList.add(item)
+                    }
+                    itemRview.adapter =RvAdaptor(itemArrayList){item : Item -> itemClicked((item))}
                 }
-                itemRview.adapter =RvAdaptor(itemArrayList){item : Item -> itemClicked((item))}
             }
-        }
 
-        override fun onCancelled(error: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
 
-        }
+            }
 
 
-    })
-}
+        })
+    }
+    //Get information on the item that was clicked and share to a view model
     private fun itemClicked(item:Item){
         val itemName = item.itemName
         val itemDesc = item.itemDesc
         val itemQty = item.itemQty
         val itemUrl = item.photoURL
-        sharedView.saveItem(itemName,itemDesc,itemQty,itemUrl)
+        val itemFreezer = item.freezerLoc
+        sharedView.saveItem(itemName,itemDesc,itemQty,itemUrl, itemFreezer)
 
         (activity as MainActivity).showDialog()
 
-
-
-        Toast.makeText(activity, "Clicked: ${item.itemName}",Toast.LENGTH_SHORT).show()
     }
+    // To avoid memory leaks we set the binding back to null
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }
 
 

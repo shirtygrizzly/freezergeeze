@@ -25,9 +25,9 @@ class Profile : Fragment(R.layout.fragment_profile)  {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+        //Get the Google Information
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("310090194189-2ha5vhsts0mroabnlogac5hmhjufjuq9.apps.googleusercontent.com")
+            .requestIdToken("your ID")
             .requestEmail()
             .build()
 
@@ -44,7 +44,7 @@ class Profile : Fragment(R.layout.fragment_profile)  {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        //binding allows easy communication between the xml and .kt files
         _binding = FragmentProfileBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         return binding.root
@@ -54,17 +54,19 @@ class Profile : Fragment(R.layout.fragment_profile)  {
         super.onViewCreated(view, savedInstanceState)
         val currentUser = auth.currentUser
         binding.signOutButton.setOnClickListener{
-
+            //Sign out of current session
             auth.signOut()
-            // Google sign out
+            // Google sign out -- if this is not done it will automatically log in
             googleSignInClient.signOut()
 
 
         }
+        //Get the user information
         userID= currentUser!!.uid
-        binding.usernameTxt.text  = currentUser?.displayName
-        binding.emailTxt.text = currentUser?.email
-
+        //Gets User name and Email
+        binding.usernameTxt.text  = currentUser.displayName
+        binding.emailTxt.text = currentUser.email
+        //Display their user photo
         Glide.with(this).load(auth.currentUser?.photoUrl).override(500,500).into(binding.profileImage)
 
 

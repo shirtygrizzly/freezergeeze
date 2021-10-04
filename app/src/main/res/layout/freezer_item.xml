@@ -60,11 +60,12 @@
             android:textAlignment="center"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/Edit_btn"
+        <ImageView
+            android:id="@+id/photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit" />
+            android:layout_height="79dp"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
     </LinearLayout>
 
 

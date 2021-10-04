@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.main_screen.*
 
 
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
-companion object{
-   lateinit var userID:String
-}
+    companion object{
+        lateinit var userID:String
+    }
     private lateinit var auth: FirebaseAuth
 
 
@@ -47,7 +47,7 @@ companion object{
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-                //State Listener to Send back to sign in page when user signs out
+        //State Listener to Send back to sign in page when user signs out
         auth.addAuthStateListener {
             Log.i("firebase", "AuthState changed to ${it.currentUser?.uid}")
             if (it.currentUser != null) {
@@ -110,7 +110,7 @@ companion object{
         fragment.replace(R.id.fragment_container, frag).commit()
     }
 
-
+    //Listen for Activity Result for Camera
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
 
@@ -119,6 +119,7 @@ companion object{
             takenImageDisplay.setImageBitmap(takenImage)
         }else{super.onActivityResult(requestCode, resultCode, data)}}
 
+    //Show the Details Dialog
     fun showDialog() {
         val dialog = DetailsFragment()
         dialog.show(supportFragmentManager, "Details")
