@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freezergeez.databinding.FreezerItemBinding
-import com.squareup.picasso.Picasso
+
 
 class RvAdaptor(private val itemList:ArrayList<Item>, private val clickListener :(Item) -> Unit) :RecyclerView.Adapter<RvAdaptor.MyViewHolder>() {
 
@@ -33,7 +33,7 @@ class RvAdaptor(private val itemList:ArrayList<Item>, private val clickListener 
 
             binding.itemDescriptionView.text = item.itemDesc
 
-            Picasso.get().load(item.photoURL).into(binding.photo)
+
             itemView.setOnClickListener { clickListener(item) }
         }
 
