@@ -1,8 +1,10 @@
 package com.example.freezergeez
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -16,6 +18,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -34,9 +39,8 @@ import java.util.*
 
 const val REQUEST_CODE = 13
 
-private const val FILE_NAME ="photo.jpg"
-lateinit var photoFile :File
-private var photoURI: Uri? = null
+const val FILE_NAME ="photo.jpg"
+var photoURI: Uri? = null
 
 
 class AddItemToFreezer : Fragment() {
@@ -68,27 +72,13 @@ class AddItemToFreezer : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
         binding.AddPhoto.setOnClickListener {
-            //Delcare intent to take photo from built in camera app
-            val takepictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            photoFile = getPhotoFile(FILE_NAME)
-            //Set up a file provider to allow the camera to communicate with the app
-            val fileProvider = FileProvider.getUriForFile(
-                requireActivity(),
-                "com.example.freezergeez.fileprovider",
-                photoFile
-            )
-            photoURI = Uri.parse(photoFile.path)
-
-            //Take the picture if a camera app is available otherwise send a message
-            takepictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-            if (takepictureIntent.resolveActivity(activity?.packageManager!!) != null) {
-
-                startActivityForResult(takepictureIntent, REQUEST_CODE)
-            } else {
-                Toast.makeText(activity, "No camera Application Found", Toast.LENGTH_SHORT).show()
-            }
+            (activity as MainActivity).onClickRequestPermission(view)
         }
+
+
         binding.addButton.setOnClickListener {
             //Get the values and parse them into fields
             itemName = binding.itemNameTxt.text.toString()
@@ -159,26 +149,8 @@ class AddItemToFreezer : Fragment() {
 
         }}
 
-    //gets the photo from the camera
-    private fun getPhotoFile(fileName: String): File {
-        val storageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(fileName, ".jpg", storageDirectory)
-    }
-    //Sets the template photo
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
-            val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
 
 
-            binding.takenImageDisplay.setImageBitmap(takenImage)
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-
-
-    }
     //get the value of the Freezer Selection
     private fun getValues(): String {
         return FreezerSelection.selectedItem.toString()
